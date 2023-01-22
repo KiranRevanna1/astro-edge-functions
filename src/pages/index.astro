@@ -1,0 +1,92 @@
+---
+import Layout from '../components/Layout.astro';
+
+const ip = Astro.request.headers.get('x-real-ip')
+const city = decodeURIComponent(Astro.request.headers.get('x-vercel-ip-city'))
+---
+
+<Layout title="Astro Vercel Edge">
+	<main>
+		<h1>Hello from the <span class="text-gradient">Edge</span></h1>
+		<div class="banner">
+			<p>Your city<br /><strong>{city}</strong></p>
+			<p>Your IP address<br /><strong>{ip}</strong></p>
+		</div>
+		<p class="footer">Built with <a href="https://github.com/withastro/astro">Astro</a> and <a href="https://github.com/withastro/astro/tree/main/packages/integrations/vercel">@astrojs/vercel</a> — <a href="https://github.com/JuanM04/astro-on-the-edge">Source</a></p>
+	</main>
+</Layout>
+
+<style>
+	:root {
+		--color-border: hsl(17, 24%, 90%);
+		--astro-gradient: linear-gradient(0deg,#4F39FA, #DA62C4);
+		--night-sky-gradient: linear-gradient(0deg, #392362 -33%, #431f69 10%, #30216b 50%, #1f1638 100%);
+	}
+
+	h2 {
+		margin: 0;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	h2 span {
+		display: inline-block;
+		transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	code {
+		font-size: 0.875em;
+		border: 0.1em solid var(--color-border);
+		border-radius: 4px;
+		padding: 0.15em 0.25em;
+	}
+
+	main {
+		margin: auto;
+    padding: 1em;
+		max-width: 60ch;
+	}
+
+	.text-gradient {
+		font-weight: 900;
+		background-image: var(--astro-gradient);
+		-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+		background-size: 100% 200%;
+		background-position-y: 100%;
+		border-radius: 0.4rem;
+		animation: pulse 4s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% {
+			background-position-y: 0%;
+		}
+		50% {
+			background-position-y: 80%;
+		}
+	}
+
+	.banner {
+		background-image: var(--night-sky-gradient);
+		padding: 0.5rem 1.5rem;
+		border-radius: 0.4rem;
+		color: var(--color-bg);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 1rem;
+	}
+
+	.banner strong {
+		font-size: 1.75em;
+	}
+
+	.footer {
+		font-size: 0.8rem;
+		text-align: center;
+		margin-top: 3rem;
+	}
+
+	.footer a {
+		text-decoration: none;
+	}
+</style>
